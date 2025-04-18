@@ -22,5 +22,6 @@ outdir.parent.mkdir(exist_ok=True, parents=True)
 test.to_csv(outdir.joinpath('predictions.csv'),index=False)
 
 joblib.dump(lr, outdir.joinpath('model.joblib'))
+https://github.com/allieferas/dsa-git-tutorial.git
 
 
