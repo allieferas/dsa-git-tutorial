@@ -17,6 +17,8 @@ lr = LinearRegression()
 lr.fit(train[xcols],train[target])
 test['prediction'] = lr.predict(test[xcols])
 
+#beep boop
+
 outdir = Path('data/out')
 outdir.parent.mkdir(exist_ok=True, parents=True)
 test.to_csv(outdir.joinpath('predictions.csv'),index=False)
