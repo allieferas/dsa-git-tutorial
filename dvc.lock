@@ -1,0 +1,53 @@
+schema: '2.0'
+stages:
+  clean_data:
+    cmd: jupyter nbconvert --to notebook --inplace --execute notebooks/cool_trees.ipynb
+    deps:
+    - path: data/in/Tree_Inventory_20250416.csv
+      hash: md5
+      md5: 212fb081210bec423b1dc4075c5ec74c
+      size: 32928680
+    - path: notebooks/cool_trees.ipynb
+      hash: md5
+      md5: ab7d91a6d4b82d9af6bc532dae3c0979
+      size: 64710
+    outs:
+    - path: data/processed/clean_trees.csv
+      hash: md5
+      md5: 0973416501ddcd05a2479d3e29f9c699
+      size: 2553033
+  train_model:
+    cmd: python src/training.py
+    deps:
+    - path: data/processed/clean_trees.csv
+      hash: md5
+      md5: 0973416501ddcd05a2479d3e29f9c699
+      size: 2553033
+    - path: src/training.py
+      hash: md5
+      md5: 421303b064631549c4edaa1b5b6305e8
+      size: 727
+    outs:
+    - path: data/out/model.joblib
+      hash: md5
+      md5: 33e810a9cff916644e794c58113fedb4
+      size: 1041
+    - path: data/out/predictions.csv
+      hash: md5
+      md5: bc0aad73d827590710d5ea2c04b87457
+      size: 764625
+  evaluation:
+    cmd: jupyter nbconvert --to notebook --inplace --execute notebooks/evaluation.ipynb
+    deps:
+    - path: data/out/model.joblib
+      hash: md5
+      md5: 33e810a9cff916644e794c58113fedb4
+      size: 1041
+    - path: data/out/predictions.csv
+      hash: md5
+      md5: bc0aad73d827590710d5ea2c04b87457
+      size: 764625
+    - path: notebooks/evaluation.ipynb
+      hash: md5
+      md5: 8cf829de93678512a72ab0144234e782
+      size: 62563
