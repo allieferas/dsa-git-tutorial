@@ -1,0 +1,25 @@
+vars:
+    - execute_nb: jupyter nbconvert --to notebook --inplace --execute
+
+stages:
+  clean_data:
+    cmd: ${execute_nb} notebooks/cool_trees.ipynb
+    deps:
+      - notebooks/cool_trees.ipynb
+      - data/in/Tree_Inventory_20250416.csv
+    outs:
+      - data/processed/clean_trees.csv
+  train_model:
+    cmd: python src/training.py
+    deps:
+      - src/training.py
+      - data/processed/clean_trees.csv
+    outs:
+      - data/out/predictions.csv
+      - data/out/model.joblib
+  evaluation:
+    cmd: ${execute_nb} notebooks/evaluation.ipynb
+    deps:
+      - notebooks/evaluation.ipynb
+      - data/out/predictions.csv
+      - data/out/model.joblib
