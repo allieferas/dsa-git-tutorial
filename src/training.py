@@ -12,10 +12,12 @@ train, test = train_test_split(tree, train_size=0.8, test_size=0.2, random_state
 
 target='Property Benefits ($)'
 xcols = [c for c in train.columns if c != target]
-
+# a comment
 lr = LinearRegression()
 lr.fit(train[xcols],train[target])
 test['prediction'] = lr.predict(test[xcols])
+
+#beep boop
 
 outdir = Path('data/out')
 outdir.parent.mkdir(exist_ok=True, parents=True)
